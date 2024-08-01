@@ -5,10 +5,13 @@ from ckeditor.fields import RichTextField
 class Category(models.Model):
     name = models.CharField( max_length=100,unique=True)
     slug = models.SlugField(max_length=100,unique=True)
+
+    def __str__(self):
+        return self.name
     
-class Meta:
-    verbose_name = 'Category'
-    verbose_name_plural = 'Categories'
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
     
 
 
@@ -24,9 +27,12 @@ class Hospital(models.Model):
     meta_keyword = models.CharField( max_length=100,null=True,blank=True)
     status = models.BooleanField(default=True,blank=True)
     
-class Meta:
-    verbose_name = 'Hospital'
-    verbose_name_plural = 'Hospital'
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Hospital'
+        verbose_name_plural = 'Hospital'
     
 class Setting(models.Model):
     name = models.CharField( max_length=50,unique=True)
@@ -42,6 +48,6 @@ class Setting(models.Model):
     about = RichTextField()
     
 
-class Meta:
-    verbose_name = 'Setting'
-    verbose_name_plural = 'Setting'
+    class Meta:
+        verbose_name = 'Setting'
+        verbose_name_plural = 'Setting'
