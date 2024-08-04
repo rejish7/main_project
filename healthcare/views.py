@@ -25,3 +25,8 @@ def contact(request):
 def services(request):
     
     return render(request,'pages/our_services/services.html',)
+
+
+def doctor(request):
+    
+    return render(request,'pages/doctor/doctor.html',)

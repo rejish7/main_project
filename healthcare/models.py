@@ -55,7 +55,8 @@ class Setting(models.Model):
     youtube = models.CharField( max_length=100,null=True,blank=True)
     about = RichTextField()
     
-
+    def __str__(self):
+        return self.name
     class Meta:
         verbose_name = 'Setting'
         verbose_name_plural = 'Setting'
