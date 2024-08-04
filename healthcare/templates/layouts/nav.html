@@ -32,19 +32,18 @@
                             <div class="main-menu">
                                 <nav class="navigation">
                                     <ul class="nav menu">
-                                        <li><a href="#">Home </a></li>
-                                        <li><a href="#">Our Services </a></li>
+                                        <li><a href="{% url 'home' %}">Home </a></li>
+                                        <li><a href="{% url 'services' %}">Our Services </a></li>
                                         <li><a href="#">Doctors </a></li>
                                         <li><a href="#">Overiew<i ></i></a></li>
-                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="get-quote">
-                               <button href='#' type='button' class='btn btn-primary'>Book Appointment</button>
-
+                                <a href="{% url 'appointment' %}" class="btn btn-primary">Get Appointment</a>
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Hospital)
-class NewsAdmin(admin.ModelAdmin):
+class HospitalAdmin(admin.ModelAdmin):
   list_display = ['category']
   list_display = ['title','category','status','updated_at','image']
   prepopulated_fields = {'slug':('title',)}
+  
+@admin.register(Banner)
+class  BannerAdmin(admin.ModelAdmin):
+  list_display = ['Banner']
+  list_display = ['image1','title1']

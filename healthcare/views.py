@@ -1,11 +1,9 @@
 from django.shortcuts import render
 
-from healthcare.models import *
-
+from .models import *
 def home(request):
-    banner = Category.objects.get(name='gallery')
     data={
-        'bannerData':Hospital.objects.filter(category =banner)[:4],
+        'bannerData': Banner.objects.all(),
     }
     
     return render(request,'pages/home/home.html',data)

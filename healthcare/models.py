@@ -33,6 +33,14 @@ class Hospital(models.Model):
     class Meta:
         verbose_name = 'Hospital'
         verbose_name_plural = 'Hospital'
+        
+class Banner(models.Model):
+    image1 = models.ImageField(upload_to='banner')
+    title1 = models.CharField(max_length=300)
+
+    class Meta:
+        verbose_name = 'Banner'
+        verbose_name_plural = 'Banners'
     
 class Setting(models.Model):
     name = models.CharField( max_length=50,unique=True)
