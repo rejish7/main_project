@@ -19,13 +19,15 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
-  list_display = ['image1', 'title1','show_image']
- 
-  def show_image(self,obj): 
-        if obj.image1: 
-            return format_html('<img src="{}" width="50"/>'.format(obj.image1.url)) 
-        return ''
+  list_display = ['title1', 'show_image']
+  readonly_fields = ['show_image']
 
+  def show_image(self, obj):
+      if obj.image1:
+          return format_html('<img src="{}" width="100" height="auto" />', obj.image1.url)
+      return ''
+
+  show_image.short_description = 'Image Preview'
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
   list_display = ['title', 'icon', 'link']

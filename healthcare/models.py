@@ -14,7 +14,7 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
         
 class Banner(models.Model):
-    image1 = models.ImageField(upload_to='banner')
+    image1 = models.ImageField(upload_to='banner/')
     title1 = models.CharField(max_length=300)
 
     class Meta:
@@ -119,6 +119,7 @@ class Doctor(models.Model):
 class Appointment(models.Model):
     patient_name = models.CharField(max_length=100)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     appointment_date = models.DateField()
     appointment_time = models.TimeField()
     reason = models.TextField()
