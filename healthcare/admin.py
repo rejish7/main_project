@@ -2,24 +2,82 @@
 from django.contrib import admin
 from .models import *
 from django.db.models import Count
+from django.utils.html import format_html
+
+
+from django.contrib import admin
+from .models import *
 
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
-  list_display = ['name','email','phone']
+  list_display = ['name', 'email', 'phone']
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-  list_display =['name','slug']
+  list_display = ['name', 'slug']
   prepopulated_fields = {'slug': ('name',)}
 
-
-@admin.register(Hospital)
-class HospitalAdmin(admin.ModelAdmin):
-  list_display = ['category']
-  list_display = ['title','category','status','updated_at','image']
-  prepopulated_fields = {'slug':('title',)}
-  
 @admin.register(Banner)
-class  BannerAdmin(admin.ModelAdmin):
-  list_display = ['Banner']
-  list_display = ['image1','title1']
+class BannerAdmin(admin.ModelAdmin):
+  list_display = ['image1', 'title1','show_image']
+ 
+  def show_image(self,obj): 
+        if obj.image1: 
+            return format_html('<img src="{}" width="50"/>'.format(obj.image1.url)) 
+        return ''
+
+@admin.register(Schedule)
+class ScheduleAdmin(admin.ModelAdmin):
+  list_display = ['title', 'icon', 'link']
+
+@admin.register(OpeningHours)
+class OpeningHoursAdmin(admin.ModelAdmin):
+  list_display = ['day', 'hours']
+
+@admin.register(FunFact)
+class FunFactAdmin(admin.ModelAdmin):
+  list_display = ['icon', 'count', 'description']
+
+@admin.register(CallToAction)
+class CallToActionAdmin(admin.ModelAdmin):
+  list_display = ['title', 'phone_number']
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+  list_display = ['name']
+
+@admin.register(Doctor)
+class DoctorAdmin(admin.ModelAdmin):
+  list_display = ['name', 'department']
+
+@admin.register(Appointment)
+class AppointmentAdmin(admin.ModelAdmin):
+  list_display = ['patient_name', 'doctor', 'appointment_date', 'appointment_time', 'reason', 'created_at']
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+  list_display = ['name', 'slug']
+  prepopulated_fields = {'slug': ('name',)}
+
+@admin.register(DoctorPage)
+class DoctorPageAdmin(admin.ModelAdmin):
+  list_display = ['title']
+
+@admin.register(OverviewSetting)
+class OverviewSettingAdmin(admin.ModelAdmin):
+  list_display = ['name']
+
+@admin.register(OverviewSection)
+class OverviewSectionAdmin(admin.ModelAdmin):
+  list_display = ['title']
+
+@admin.register(EmergencyService)
+class EmergencyServiceAdmin(admin.ModelAdmin):
+  list_display = ['title']
+
+@admin.register(EmergencyContact)
+class EmergencyContactAdmin(admin.ModelAdmin):
+  list_display = ['phone_number', 'emergency_service']
+
+@admin.register(ServiceDetail)
+class ServiceDetailAdmin(admin.ModelAdmin):
+  list_display = ['title']

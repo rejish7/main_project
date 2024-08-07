@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
+from django.contrib import messages
 
 from .models import *
 def home(request):
@@ -15,8 +16,27 @@ def about(request):
 
 
 def appointment(request):
-    
-    return render(request,'pages/appointment/appointment.html',)
+    if request.method == 'POST':
+        patient_name = request.POST.get('patient_name')
+        doctor_id = request.POST.get('doctor')
+        appointment_date = request.POST.get('appointment_date')
+        appointment_time = request.POST.get('appointment_time')
+        reason = request.POST.get('reason')
+
+        doctor = Doctor.objects.get(id=doctor_id)
+
+        appointment = Appointment.objects.create(
+            patient_name=patient_name,
+            doctor=doctor,
+            appointment_date=appointment_date,
+            appointment_time=appointment_time,
+            reason=reason
+        )
+        messages.success(request,'Data inserted successfully')
+        return redirect(request, 'pages/appointment/appointment.html')
+    else:
+        data={'appointmentdata':Appointment.objects.all()}
+    return render(request, 'pages/appointment/appointment.html', data)
 
 def contact(request):
     
@@ -30,3 +50,7 @@ def services(request):
 def doctor(request):
     
     return render(request,'pages/doctor/doctor.html',)
+
+def overview(request):
+    
+    return render(request,'pages/overview/overview.html',)

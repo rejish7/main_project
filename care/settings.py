@@ -138,3 +138,7 @@ CKEDITOR_CONFIGS = {
         'width': 500,
     },
 }
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Library Admin",
+}
