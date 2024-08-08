@@ -136,26 +136,25 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
-
 class Service(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
+    title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return self.name
+        return self.title
 
     class Meta:
         verbose_name = 'Service'
         verbose_name_plural = 'Services'
 
+
 class DoctorPage(models.Model):
-    title = models.CharField(max_length=200)
+    name = models.ForeignKey(Doctor, on_delete=models.CASCADE,)
     content = models.TextField()
-    services = models.ManyToManyField(Service)
+    department = models.ManyToManyField(Department)
 
     def __str__(self):
-        return self.title
+        return self.name
 
     class Meta:
         verbose_name = 'Doctor Page'
@@ -185,33 +184,14 @@ class OverviewSection(models.Model):
         verbose_name = 'Overview Section'
         verbose_name_plural = 'Overview Sections'
 
-class EmergencyService(models.Model):
-    title = models.CharField(max_length=200, default="Emergency Services")
-    description = models.TextField()
-    image = models.ImageField(upload_to='emergency_services/', null=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Emergency Service'
-        verbose_name_plural = 'Emergency Services'
-
-class EmergencyContact(models.Model):
-    phone_number = models.CharField(max_length=20)
-    emergency_service = models.ForeignKey(EmergencyService, on_delete=models.CASCADE, related_name='contacts')
-
-    def __str__(self):
-        return self.phone_number
-
 class ServiceDetail(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.ForeignKey(Service, on_delete=models.CASCADE,)
     description = models.TextField()
     image = models.ImageField(upload_to='service_details/', null=True, blank=True)
     learn_more_link = models.URLField(blank=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.image} - {self.learn_more_link}"
 
     class Meta:
         verbose_name = 'Service Detail'

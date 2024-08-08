@@ -60,8 +60,12 @@ def contact(request):
     return render(request,'pages/contact/contact.html',)
 
 def services(request):
+    data={
+        'serviceData':ServiceDetail.objects.all()
+        
+    }
     
-    return render(request,'pages/our_services/services.html',)
+    return render(request,'pages/our_services/services.html',data)
 
 
 def doctor(request):

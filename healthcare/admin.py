@@ -57,12 +57,12 @@ class AppointmentAdmin(admin.ModelAdmin):
   list_display = ['patient_name', 'doctor', 'appointment_date', 'appointment_time', 'reason', 'created_at']
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-  list_display = ['name', 'slug']
-  prepopulated_fields = {'slug': ('name',)}
+  list_display = ['title', 'slug']
+  prepopulated_fields = {'slug': ('title',)}
 
 @admin.register(DoctorPage)
 class DoctorPageAdmin(admin.ModelAdmin):
-  list_display = ['title']
+  list_display = ['name','content']
 
 @admin.register(OverviewSetting)
 class OverviewSettingAdmin(admin.ModelAdmin):
@@ -72,14 +72,7 @@ class OverviewSettingAdmin(admin.ModelAdmin):
 class OverviewSectionAdmin(admin.ModelAdmin):
   list_display = ['title']
 
-@admin.register(EmergencyService)
-class EmergencyServiceAdmin(admin.ModelAdmin):
-  list_display = ['title']
-
-@admin.register(EmergencyContact)
-class EmergencyContactAdmin(admin.ModelAdmin):
-  list_display = ['phone_number', 'emergency_service']
 
 @admin.register(ServiceDetail)
 class ServiceDetailAdmin(admin.ModelAdmin):
-  list_display = ['title']
+  list_display = ['title','image','learn_more_link']

@@ -5,140 +5,29 @@ Our Services
 {% endblock %}
 
 {% block content %}
-<section class="Emergency-services">
+<section>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <img src="#" alt="">
-            </div>
-            <div class="col-md-6">
-                <div class="content">
-                    <h2>Emergency Services</h2>
-                    <p>#</p>
+            {% for services in serviceData %}
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="content">
+                        <h2>{{ services.title }}</h2>
+                        <p>{{ services.description |truncatewords:20}}</p>
+                        <div class="button">
+                            <a href="{{ services.learn_more_link }}" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                    </div>
+                    
                 </div>
-                <ul >
-                    <h4>Emergency Number</h4>
-                    <li >
-                        <span><i aria-hidden="true" class="icofont-phone"></i></span>
-                        <span>01-5911623</span>      
-                    </li>
-                    <li >
-                        <span><i aria-hidden="true" class="icofont-phone"></i></span>
-                        <span>9803111111</span>         
-                    </li>
-                    <li >
-                        <span><i aria-hidden="true" class="icofont-phone"></i></span>
-                        <span>9803222222</span>      
-                    </li>
-                </ul>
+                <div class="col-md-6">
+                    <img src="{{ services.image.url }}">
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
 
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div class="content">
-                        <h2>Immigration Medical Examination</h2>
-                        <p>#</p>
-                        <div class="button">
-                            <a href="#" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
-                          </div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-6">
-                    <img src="#" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div class="content">
-                        <h2>Air Evacuation</h2>
-                        <p>#</p>
-                        <div class="button">
-                            <a href="#" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-6">
-                    <img src="#" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div class="content">
-                        <h2>International Patients</h2>
-                        <p>#</p>
-                        <div class="button">
-                            <a href="#" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-6">
-                    <img src="#" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div class="content">
-                        <h2>Pharmacy</h2>
-                        <p>#</p>
-                        <div class="button">
-                            <a href="#" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-6">
-                    <img src="#" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div class="content">
-                        <h2>Rooms</h2>
-                        <p>#</p>
-                        <div class="button">
-                            <a href="#" class="btn second">Learn More<i class="fa fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-md-6">
-                    <img src="#" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 {% endblock %}
