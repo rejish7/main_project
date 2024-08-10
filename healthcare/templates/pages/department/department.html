@@ -1,0 +1,70 @@
+{% extends "layouts/master.html" %}
+{% load static %}
+{% block title %}
+Departments
+{% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <h1>Our Departments</h1>
+    </div>
+</div>
+</section>
+
+
+
+
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-12 ">
+            <div class="  wow fadeInUp" data-wow-delay="0.1s">
+            <section>
+                <div class="services ">
+                    <h3>Know more about our doctors...</h3>
+                    <div class="row">
+                        {% for department in departments %}
+                        <div style="display: flex; justify-content: space-around;">
+                            <div class="card" style="width: 18rem; margin: 1rem;">
+                                <img src="{{ department.image.url }}"  class="card-img-top" >
+                                <div class="text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ department.name }}</h5>
+                                        <p class="card-text">{{ department.description|truncatewords:20 }}</p>
+                                        <a href="#" class="btn btn-primary">View Doctors</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

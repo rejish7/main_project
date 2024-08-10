@@ -6,11 +6,12 @@
 {% block content %}
 <section>
 <div class="container">
+    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
     <h2 class="display-4 fw-bold">About Us</h2>
         <div class="col-md-12">
             <h1><span>{{ setting.name }}</span></h2>
                 <br>
-            <p>{{ setting.about }}</p>
+            <p>{{ setting.about|safe }}</p>
         
         </div>
     </div>

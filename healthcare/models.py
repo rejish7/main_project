@@ -1,26 +1,26 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+import os
+from django.utils.text import slugify
 
-
-class Category(models.Model):
-    name = models.CharField( max_length=100,unique=True)
-    slug = models.SlugField(max_length=100,unique=True)
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
         
 class Banner(models.Model):
     image1 = models.ImageField(upload_to='banner/')
     title1 = models.CharField(max_length=300)
+    
 
     class Meta:
         verbose_name = 'Banner'
         verbose_name_plural = 'Banners'
     
+@receiver(pre_delete, sender=Banner)
+def delete_banner_image(sender, instance, **kwargs):
+    if instance.image1:
+        if os.path.isfile(instance.image1.path):
+            os.remove(instance.image1.path)
+
 class Setting(models.Model):
     name = models.CharField( max_length=50,unique=True)
     logo = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
@@ -45,9 +45,9 @@ class Setting(models.Model):
 
 class Schedule(models.Model):
     title = models.CharField(max_length=100)
-    icon = models.CharField(max_length=50)
-    description = models.TextField()
-    link = models.URLField()
+    icon =  models.CharField(max_length=50)
+    description = RichTextField()
+    link = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -81,7 +81,8 @@ class FunFact(models.Model):
 
 class CallToAction(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    slug = models.SlugField(unique=True, blank=True)
+    description = RichTextField()
     phone_number = models.CharField(max_length=20)
     button1_text = models.CharField(max_length=50)
     button1_link = models.URLField()
@@ -97,6 +98,7 @@ class CallToAction(models.Model):
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='department/', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -108,6 +110,14 @@ class Department(models.Model):
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='doctors/', null=True, blank=True)
+    description = RichTextField()
+    email = models.CharField( max_length=100,null=True,blank=True)
+    facebook = models.CharField( max_length=100,null=True,blank=True)
+    twitter = models.CharField( max_length=100,null=True,blank=True)
+    instagram = models.CharField( max_length=100,null=True,blank=True)
+    linkedin = models.CharField( max_length=100,null=True,blank=True)
+    
 
     def __str__(self):
         return f"{self.name} - {self.department}"
@@ -115,14 +125,15 @@ class Doctor(models.Model):
     class Meta:
         verbose_name = 'Doctor'
         verbose_name_plural = 'Doctors'
-
+        
 class Appointment(models.Model):
     patient_name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     appointment_date = models.DateField()
     appointment_time = models.TimeField()
-    reason = models.TextField()
+    reason = RichTextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -136,57 +147,28 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'Appointment'
         verbose_name_plural = 'Appointments'
+
+        
+
 class Service(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
+    
 
     def __str__(self):
         return self.title
-
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
     class Meta:
         verbose_name = 'Service'
         verbose_name_plural = 'Services'
 
-
-class DoctorPage(models.Model):
-    name = models.ForeignKey(Doctor, on_delete=models.CASCADE,)
-    content = models.TextField()
-    department = models.ManyToManyField(Department)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Doctor Page'
-        verbose_name_plural = 'Doctor Pages'
-        
-class OverviewSetting(models.Model):
-    name = models.CharField(max_length=200)
-    about = models.TextField()
-    image = models.ImageField(upload_to='overview_images/', null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Overview Setting'
-        verbose_name_plural = 'Overview Settings'
-
-class OverviewSection(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    image = models.ImageField(upload_to='overview_images/', null=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Overview Section'
-        verbose_name_plural = 'Overview Sections'
-
 class ServiceDetail(models.Model):
-    title = models.ForeignKey(Service, on_delete=models.CASCADE,)
-    description = models.TextField()
+    title = models.ForeignKey(Service, on_delete=models.CASCADE)
+    description = RichTextField()
     image = models.ImageField(upload_to='service_details/', null=True, blank=True)
     learn_more_link = models.URLField(blank=True)
 

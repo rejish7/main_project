@@ -5,12 +5,14 @@ from healthcare import views
 
 urlpatterns = [
    path("",views.home,name="home"),
-   path("Overview",views.overview,name="overview"),
-   path("Services",views.services,name="services"),
+   path("Doctors",views.doctor,name="doctor"),
+
+   path('Services', views.services, name='services'), 
+   path('Services/<slug:slug>/', views.display_slug, name='slug'),  
    path("About",views.about,name="about"),
    path("Contact",views.contact,name="contact"),
    path('Appointment',views.appointment,name="appointment"),
-   path('Find a Doctor',views.doctor,name="doctor"),
+   path('Departments',views.department,name="department"),
 
 ]
 

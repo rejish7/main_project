@@ -12,10 +12,6 @@ from .models import *
 class SettingAdmin(admin.ModelAdmin):
   list_display = ['name', 'email', 'phone']
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-  list_display = ['name', 'slug']
-  prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -46,33 +42,38 @@ class CallToActionAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-  list_display = ['name']
+  list_display = ['name','show_image']
+  
+  def show_image(self, obj):
+      if obj.image:
+          return format_html('<img src="{}" width="100" height="auto" />', obj.image.url)
+      return ''
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-  list_display = ['name', 'department']
+  list_display = ['name', 'department','show_image']
+  def show_image(self, obj):
+      if obj.image:
+          return format_html('<img src="{}" width="100" height="auto" />', obj.image.url)
+      return ''
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
   list_display = ['patient_name', 'doctor', 'appointment_date', 'appointment_time', 'reason', 'created_at']
+
+
+
+
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-  list_display = ['title', 'slug']
-  prepopulated_fields = {'slug': ('title',)}
-
-@admin.register(DoctorPage)
-class DoctorPageAdmin(admin.ModelAdmin):
-  list_display = ['name','content']
-
-@admin.register(OverviewSetting)
-class OverviewSettingAdmin(admin.ModelAdmin):
-  list_display = ['name']
-
-@admin.register(OverviewSection)
-class OverviewSectionAdmin(admin.ModelAdmin):
-  list_display = ['title']
-
+    list_display = ['title', 'slug']
+    prepopulated_fields = {'slug': ('title',)}
 
 @admin.register(ServiceDetail)
 class ServiceDetailAdmin(admin.ModelAdmin):
-  list_display = ['title','image','learn_more_link']
+  list_display = ['title','show_image','learn_more_link'] 
+  
+  def show_image(self, obj):
+      if obj.image:
+          return format_html('<img src="{}" width="100" height="auto" />', obj.image.url)
+      return ''

@@ -1,25 +1,22 @@
 from django.shortcuts import render ,redirect
 from django.contrib import messages
 import os
+from django.urls import reverse
 
 from .models import *
+
+
+
 def home(request):
     banners = Banner.objects.all()
-   
+    schedule = Schedule.objects.all()
+    funfact = FunFact.objects.all()
     data = {
         'banners': banners,
+        'schedules':schedule,
+        'funfacts':funfact
     }
     return render(request, 'pages/home/home.html', data)
-
-def deletepath(id):
-    obj1 = Banner.objects.get(id=id)
-    if obj1.image1:
-        if os.path.exists(obj1.image1.path):
-            os.remove(obj1.image1.path)
-        return True
-    else:
-        return True
-
 def about(request):
     
     return render(request,'pages/about/about.html',)
@@ -60,20 +57,29 @@ def contact(request):
     return render(request,'pages/contact/contact.html',)
 
 def services(request):
-    data={
-        'serviceData':ServiceDetail.objects.all()
-        
+    data = {
+        'serviceData': ServiceDetail.objects.all(),
     }
-    
-    return render(request,'pages/our_services/services.html',data)
+
+    return render(request, 'pages/our_services/services.html', data)
+
+def display_slug(request, slug):
+    service = ServiceDetail.objects.get(slug=slug)
+    data = {
+        'service': service,
+    }
+    return render(request, 'pages/our_services/service_detail.html', data)
 
 
 def doctor(request):
-    data={
-    'departments': Department.objects.all(),}
     
+    doctor = Doctor.objects.all()
+    data={
+        'doctors': doctor,
+    }
     return render(request,'pages/doctor/doctor.html',data)
 
-def overview(request):
-    
-    return render(request,'pages/overview/overview.html',)
+def department(request):
+    data={
+    'departments': Department.objects.all(),}
+    return render(request,'pages/department/department.html',data)
